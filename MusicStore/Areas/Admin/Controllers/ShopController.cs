@@ -1,5 +1,6 @@
 ﻿using MusicStore.Models.Data;
 using MusicStore.Models.ViewModels.Shop;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -286,6 +287,37 @@ namespace MusicStore.Areas.Admin.Controllers
 
             //redirect
             return RedirectToAction("AddProduct");
+        }
+        //GET: admin/shop/Products
+
+        public ActionResult Products(int? page, int? catId)
+        {
+            //declare a list of productVM
+            List<ProductVm> listOfProductVm;
+            //set page number
+            var pagenumber = page ?? 1;
+
+            using (Db db = new Db())
+            {
+                //init the list
+                listOfProductVm = db.Products.ToArray()
+                                   .Where(x => catId == null || catId == 0 || x.CategoryId == catId)
+                                   .Select(x => new ProductVm(x))
+                                   .ToList();
+                //populate cat select list
+                ViewBag.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+
+                //set selected category
+                ViewBag.SelectedCat = catId.ToString();
+            }
+
+            //set pagination
+            var onePageOfProducts = listOfProductVm.ToPagedList(pagenumber, 3);
+            ViewBag.OnePageOfProducts = onePageOfProducts;
+            //return view list
+
+
+            return View(listOfProductVm);
         }
     }
 }
