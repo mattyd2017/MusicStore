@@ -312,7 +312,7 @@ namespace MusicStore.Areas.Admin.Controllers
             }
 
             //set pagination
-            var onePageOfProducts = listOfProductVm.ToPagedList(pagenumber, 3);
+            var onePageOfProducts = listOfProductVm.ToPagedList(pagenumber, 5);
             ViewBag.OnePageOfProducts = onePageOfProducts;
             //return view list
 
