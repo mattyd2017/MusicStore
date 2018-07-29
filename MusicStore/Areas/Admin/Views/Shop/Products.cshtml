@@ -34,7 +34,7 @@
         <th>
             Name
         </th>
-     
+
         <th>
             Description
         </th>
@@ -68,7 +68,7 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "EditProduct", new { id = product.Id }) |
-                @Html.ActionLink("Delete", "DeleteProduct", new { id = product.Id })
+                @Html.ActionLink("Delete", "DeleteProduct", new { id = product.Id }, new {@class = "delete" })
             </td>
         </tr>
     }
@@ -101,10 +101,10 @@
 
             ///////////////////////////////////////
             /*
-           confirm page deletion
+           confirm Product deletion
            */
            $("a.delete").click(function () {
-               if (!confirm("Confirm you want to delete the page")) return false;
+               if (!confirm("Confirm you want to delete the product")) return false;
            });
             ///////////////////////////////////////
 
